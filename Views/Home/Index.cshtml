@@ -1,0 +1,12 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome to Movie App</h1>
+    <p>Browse our collection of movies or add your own!</p>
+    <p>
+        <a class="btn btn-primary" asp-controller="Movies" asp-action="Index">Browse Movies</a>
+        <a class="btn btn-success" asp-controller="Movies" asp-action="Create">Add New Movie</a>
+    </p>
+</div>
