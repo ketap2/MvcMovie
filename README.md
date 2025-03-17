@@ -5,23 +5,8 @@ A .NET Core MVC application for managing movies, built with ASP.NET Core 8.0 and
 ## Prerequisites
 
 - [.NET 8.0 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
+- [Visual Studio 2022](https://visualstudio.microsoft.com/vs/) or [Visual Studio Code](https://code.visualstudio.com/)
 - SQL Server LocalDB or SQL Server
-
-For Ubuntu/Debian:
-
-```bash
-wget https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
-sudo dpkg -i packages-microsoft-prod.deb
-sudo apt-get update
-sudo apt-get install -y mssql-server
-```
-
-For macOS (using Docker):
-
-```bash
-docker pull mcr.microsoft.com/mssql/server:2022-latest
-docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=YourStrong@Passw0rd" -p 1433:1433 mcr.microsoft.com/mssql/server:2022-latest
-```
 
 ## Getting Started
 
@@ -32,68 +17,29 @@ git clone [https://github.com/ketap2/MvcMovie.git]
 cd MvcMovie
 ```
 
-### Install Required Tools
-
-```bash
-# Install Entity Framework Core tools globally
-dotnet tool install --global dotnet-ef
-```
-
 ### Database Setup
 
-Update the connection string in `appsettings.json` if you're not using LocalDB:
+The application uses SQL Server LocalDB. The connection string is already configured in `appsettings.json`. The database will be automatically created and seeded when you run the application for the first time.
 
-```json
-"ConnectionStrings": {
-    "MvcMovieContext": "Server=(localdb)\\mssqllocaldb;Database=MvcMovieContext-1;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True"
-}
-```
+### Running the Application
 
-### Build and Run
+1. Using .NET CLI:
 
 ```bash
-# Restore dependencies
 dotnet restore
-
-# Build the project
 dotnet build
-
-# Run the migrations
-dotnet ef database update
-
-# Run the application
 dotnet run
 ```
+
+2. Using Visual Studio:
+
+- Open the `MvcMovie.sln` solution file
+- Press F5 or click the "Run" button
 
 The application will be available at:
 
 - [https://localhost:7241](https://localhost:7241)
 - [http://localhost:5241](http://localhost:5241)
-
-## Basic dotnet Commands
-
-```bash
-# Create a new migration
-dotnet ef migrations add MigrationName
-
-# Remove last migration
-dotnet ef migrations remove
-
-# Update database
-dotnet ef database update
-
-# Drop the database
-dotnet ef database drop
-
-# List available migrations
-dotnet ef migrations list
-
-# Clean build artifacts
-dotnet clean
-
-# Run tests (if you have test project)
-dotnet test
-```
 
 ## Features
 
