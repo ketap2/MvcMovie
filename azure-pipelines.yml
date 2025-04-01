@@ -15,20 +15,34 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
+# ✅ Ensure the repository is checked out
+- checkout: self
+  fetchDepth: 1
+
+# ✅ Install NuGet tool
 - task: NuGetToolInstaller@1
 
+# ✅ Restore dependencies
 - task: NuGetCommand@2
   inputs:
     restoreSolution: '$(solution)'
 
+# ✅ Build the project
 - task: VSBuild@1
   inputs:
     solution: '$(solution)'
-    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(build.artifactStagingDirectory)\WebApp.zip" /p:DeployIisAppPath="Default Web Site"'
+    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(Build.ArtifactStagingDirectory)/WebApp.zip" /p:DeployIisAppPath="Default Web Site"'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
+# ✅ Run tests
 - task: VSTest@2
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+
+# ✅ Publish build artifacts (needed for deployment)
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathToPublish: '$(Build.ArtifactStagingDirectory)'
+    artifactName: 'drop'
